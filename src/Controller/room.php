@@ -21,10 +21,10 @@ final class room
 
         if (!empty($_REQUEST['message'])) {
             $now = date('Y-m-d H:i:s', strtotime('+9 hours'));
-            $message = str_replace('"', '\\"', $_REQUEST['message']);
             $user_id = $_REQUEST['user_id'];
-            $query = "INSERT INTO `posts` VALUES( {$data['id']}, {$user_id}, \"{$now}\", \"{$message}\" )";
+            $query = "INSERT INTO `posts` VALUES( {$data['id']}, {$user_id}, \"{$now}\", ? )";
             $stmt = db()->prepare($query);
+            $stmt->bindParam(1, $_REQUEST['message']);
             $stmt->execute();
         }
 
